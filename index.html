@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Outlook Downloader</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .icon.storm {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+        }
+
+        .icon.wind {
+            background: linear-gradient(135deg, #10b981, #047857);
+        }
+
+        h1 {
+            color: #1f2937;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .date-display {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .date-label {
+            color: #6b7280;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .current-date {
+            color: #1f2937;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .image-preview {
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            background: #f3f4f6;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-loading {
+            color: #6b7280;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .image-error {
+            color: #ef4444;
+            font-size: 14px;
+            padding: 20px;
+        }
+
+        .download-btn {
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: white;
+        }
+
+        .download-btn.storm {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+        }
+
+        .download-btn.wind {
+            background: linear-gradient(135deg, #10b981, #047857);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .download-btn.storm:hover {
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .download-btn.wind:hover {
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        .download-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status.error {
+            background: #fecaca;
+            color: #991b1b;
+        }
+
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .loading-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px 15px;
+            }
+            
+            h1 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Severe Storm Threat Container -->
+        <div class="container">
+            <div class="icon storm">⛈️</div>
+            <h1>Severe Storm Threat Downloader</h1>
+            <p class="subtitle">Get today's severe storm threat outlook from Fox Weather</p>
+            
+            <div class="date-display">
+                <div class="date-label">Today's Date</div>
+                <div class="current-date" id="currentDate1"></div>
+            </div>
+
+            <div class="image-preview" id="imagePreview1">
+                <div class="image-loading">
+                    <div class="loading-spinner"></div>
+                    Loading storm outlook...
+                </div>
+            </div>
+            
+            <button class="download-btn storm" onclick="downloadImage('storm')">
+                <span>⛈️ Download Storm Outlook</span>
+            </button>
+            
+            <div id="status1" class="status" style="display: none;"></div>
+        </div>
+
+        <!-- Damaging Wind Threat Container -->
+        <div class="container">
+            <div class="icon wind">💨</div>
+            <h1>Damaging Wind Threat Downloader</h1>
+            <p class="subtitle">Get today's damaging wind threat outlook from Fox Weather</p>
+            
+            <div class="date-display">
+                <div class="date-label">Today's Date</div>
+                <div class="current-date" id="currentDate2"></div>
+            </div>
+
+            <div class="image-preview" id="imagePreview2">
+                <div class="image-loading">
+                    <div class="loading-spinner"></div>
+                    Loading wind outlook...
+                </div>
+            </div>
+            
+            <button class="download-btn wind" onclick="downloadImage('wind')">
+                <span>💨 Download Wind Outlook</span>
+            </button>
+            
+            <div id="status2" class="status" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+
+            // Format: Monday, June 3, 2025
+            const formattedDate = now.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            document.getElementById('currentDate1').textContent = formattedDate;
+            document.getElementById('currentDate2').textContent = formattedDate;
+
+            return formattedDate;
+        }
+
+        function getWeekdayCode() {
+            const weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+            const today = new Date();
+            return weekdays[today.getDay()];
+        }
+
+        function loadImagePreview(type) {
+            const weekday = getWeekdayCode();
+            const previewId = type === 'storm' ? 'imagePreview1' : 'imagePreview2';
+            const preview = document.getElementById(previewId);
+            
+            let imageUrl;
+            if (type === 'wind') {
+                imageUrl = `https://media.foxweather.com/weather/${weekday}%20Wind%20Outlook.png`;
+            } else {
+                imageUrl = `https://media.foxweather.com/weather/${weekday}%20Severe%20Outlook.png`;
+            }
+
+            const img = new Image();
+            
+            img.onload = function() {
+                preview.innerHTML = `<img src="${imageUrl}" alt="${type} outlook" class="preview-image">`;
+            };
+            
+            img.onerror = function() {
+                preview.innerHTML = `<div class="image-error">Unable to load ${type} outlook image for today</div>`;
+            };
+            
+            img.src = imageUrl;
+        }
+
+        updateDateTime();
+        
+        // Load both image previews
+        loadImagePreview('storm');
+        loadImagePreview('wind');
+
+        function downloadImage(type) {
+            const weekday = getWeekdayCode();
+            const statusId = type === 'storm' ? 'status1' : 'status2';
+            const status = document.getElementById(statusId);
+            
+            status.style.display = 'block';
+            status.className = 'status info';
+            status.textContent = 'Downloading...';
+
+            // Start download from server
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const dateStr = `${yyyy}-${mm}-${dd}`;
+            const link = document.createElement('a');
+            link.href = `/download?day=${dateStr}&type=${type}`;
+            
+            if (type === 'storm') {
+                link.download = `${dateStr}_Severe_Storm_Outlook123123.png`;
+            } else {
+                link.download = `${dateStr}_Damaging_Wind_Outlook.png`;
+            }
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            setTimeout(() => {
+                status.className = 'status success';
+                status.textContent = 'Download started successfully!';
+            }, 500);
+        }
+    </script>
+</body>
+</html>
