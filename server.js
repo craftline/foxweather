@@ -49,7 +49,7 @@ const server = http.createServer((req, res) => {
             }
         }
         
-        const type = parsedUrl.query.type || 'storm';
+        const type = parsedUrl.query.type || 'northeast';
         const validDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
         if (!validDays.includes(day)) {
@@ -61,10 +61,6 @@ const server = http.createServer((req, res) => {
         let filename;
         
         switch (type) {
-            case 'wind':
-                imageUrl = `https://media.foxweather.com/weather/${day}%20Wind%20Outlook.png`;
-                filename = `${dayStr}_Damaging_Wind_Threat_Outlook.png`;
-                break;
             case 'northeast':
                 imageUrl = `https://media.foxweather.com/weather/${day}%20Northeast%20Severe%20Outlook.png`;
                 filename = `${dayStr}_Northeast_Severe_Storm_Threat_Outlook.png`;
@@ -77,9 +73,9 @@ const server = http.createServer((req, res) => {
                 imageUrl = `https://media.foxweather.com/weather/${day}%20Plains%20Severe%20Outlook.png`;
                 filename = `${dayStr}_Southern_Plains_Severe_Storm_Threat_Outlook.png`;
                 break;
-            default: // 'storm' - General US
-                imageUrl = `https://media.foxweather.com/weather/${day}%20Severe%20Outlook.png`;
-                filename = `${dayStr}_General_US_Severe_Storm_Threat_Outlook.png`;
+            default:
+                imageUrl = `https://media.foxweather.com/weather/${day}%20Northeast%20Severe%20Outlook.png`;
+                filename = `${dayStr}_Northeast_Severe_Storm_Threat_Outlook.png`;
                 break;
         }
 
@@ -112,7 +108,7 @@ const server = http.createServer((req, res) => {
     // Check if image exists endpoint
     if (parsedUrl.pathname === '/api/check-image') {
         const dayStr = parsedUrl.query.day || '';
-        const type = parsedUrl.query.type || 'storm';
+        const type = parsedUrl.query.type || 'northeast';
         let day = '';
         
         if (dayStr) {
@@ -125,9 +121,6 @@ const server = http.createServer((req, res) => {
 
         let imageUrl;
         switch (type) {
-            case 'wind':
-                imageUrl = `https://media.foxweather.com/weather/${day}%20Wind%20Outlook.png`;
-                break;
             case 'northeast':
                 imageUrl = `https://media.foxweather.com/weather/${day}%20Northeast%20Severe%20Outlook.png`;
                 break;
@@ -137,8 +130,8 @@ const server = http.createServer((req, res) => {
             case 'plains':
                 imageUrl = `https://media.foxweather.com/weather/${day}%20Plains%20Severe%20Outlook.png`;
                 break;
-            default: // 'storm' - General US
-                imageUrl = `https://media.foxweather.com/weather/${day}%20Severe%20Outlook.png`;
+            default:
+                imageUrl = `https://media.foxweather.com/weather/${day}%20Northeast%20Severe%20Outlook.png`;
                 break;
         }
 

@@ -2,39 +2,29 @@
 const state = {
     currentDate: '',
     images: {
-        storm: { loaded: false, error: false, url: '' },
         northeast: { loaded: false, error: false, url: '' },
         southeast: { loaded: false, error: false, url: '' },
-        plains: { loaded: false, error: false, url: '' },
-        wind: { loaded: false, error: false, url: '' }
+        plains: { loaded: false, error: false, url: '' }
     },
     downloads: {
-        storm: { loading: false, success: false, error: null },
         northeast: { loading: false, success: false, error: null },
         southeast: { loading: false, success: false, error: null },
-        plains: { loading: false, success: false, error: null },
-        wind: { loading: false, success: false, error: null }
+        plains: { loading: false, success: false, error: null }
     }
 };
 
 // DOM Elements
 const elements = {
     currentDate: document.getElementById('currentDate'),
-    stormPreview: document.getElementById('stormPreview'),
     northeastPreview: document.getElementById('northeastPreview'),
     southeastPreview: document.getElementById('southeastPreview'),
     plainsPreview: document.getElementById('plainsPreview'),
-    windPreview: document.getElementById('windPreview'),
-    stormBtn: document.getElementById('stormBtn'),
     northeastBtn: document.getElementById('northeastBtn'),
     southeastBtn: document.getElementById('southeastBtn'),
     plainsBtn: document.getElementById('plainsBtn'),
-    windBtn: document.getElementById('windBtn'),
-    stormStatus: document.getElementById('stormStatus'),
     northeastStatus: document.getElementById('northeastStatus'),
     southeastStatus: document.getElementById('southeastStatus'),
-    plainsStatus: document.getElementById('plainsStatus'),
-    windStatus: document.getElementById('windStatus')
+    plainsStatus: document.getElementById('plainsStatus')
 };
 
 // Utility Functions
@@ -183,9 +173,6 @@ const showImageError = (type) => {
 
 const getIconForType = (type) => {
     const icons = {
-        storm: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M6 19L18 7M11 4L7 8L11 12L7 16"></path>
-        </svg>`,
         northeast: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M6 19L18 7M11 4L7 8L11 12L7 16"></path>
         </svg>`,
@@ -194,14 +181,9 @@ const getIconForType = (type) => {
         </svg>`,
         plains: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M6 19L18 7M11 4L7 8L11 12L7 16"></path>
-        </svg>`,
-        wind: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17.7 7.7a2.5 2.5 0 111.8 4.3H2"></path>
-            <path d="M9.6 4.6A2 2 0 1111 8H2"></path>
-            <path d="M12.6 19.4A2 2 0 1014 16H2"></path>
         </svg>`
     };
-    return icons[type] || icons.storm;
+    return icons[type] || icons.northeast;
 };
 
 // Download Functions
@@ -223,11 +205,9 @@ const updateDownloadButton = (type, loading) => {
         `;
         
         const buttonTexts = {
-            storm: 'Download General US Outlook',
             northeast: 'Download Northeast Outlook',
             southeast: 'Download Southeast Outlook',
-            plains: 'Download Plains Outlook',
-            wind: 'Download Wind Outlook'
+            plains: 'Download Plains Outlook'
         };
         
         text.textContent = buttonTexts[type] || 'Download Outlook';
@@ -257,11 +237,9 @@ const downloadImage = async (type) => {
         
         // Set filename based on type
         const filenames = {
-            storm: `${dateStr}_General_US_Severe_Storm_Threat_Outlook.png`,
             northeast: `${dateStr}_Northeast_Severe_Storm_Threat_Outlook.png`,
             southeast: `${dateStr}_Southeast_Severe_Storm_Threat_Outlook.png`,
-            plains: `${dateStr}_Southern_Plains_Severe_Storm_Threat_Outlook.png`,
-            wind: `${dateStr}_Damaging_Wind_Threat_Outlook.png`
+            plains: `${dateStr}_Southern_Plains_Severe_Storm_Threat_Outlook.png`
         };
         
         link.download = filenames[type] || `${dateStr}_Weather_Outlook.png`;
@@ -341,11 +319,9 @@ const initializeImages = async () => {
     
     // Load all images concurrently
     await Promise.all([
-        loadImagePreview('storm'),
         loadImagePreview('northeast'),
         loadImagePreview('southeast'),
-        loadImagePreview('plains'),
-        loadImagePreview('wind')
+        loadImagePreview('plains')
     ]);
     
     console.log('Image previews loaded');
