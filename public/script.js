@@ -187,13 +187,13 @@ const getIconForType = (type) => {
             <path d="M6 19L18 7M11 4L7 8L11 12L7 16"></path>
         </svg>`,
         northeast: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"></path>
+            <path d="M6 19L18 7M11 4L7 8L11 12L7 16"></path>
         </svg>`,
         southeast: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"></path>
+            <path d="M6 19L18 7M11 4L7 8L11 12L7 16"></path>
         </svg>`,
         plains: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M3 12h18m-9-9v18"></path>
+            <path d="M6 19L18 7M11 4L7 8L11 12L7 16"></path>
         </svg>`,
         wind: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M17.7 7.7a2.5 2.5 0 111.8 4.3H2"></path>

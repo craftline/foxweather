@@ -66,7 +66,7 @@ const server = http.createServer((req, res) => {
                 filename = `${dayStr}_Damaging_Wind_Threat_Outlook.png`;
                 break;
             case 'northeast':
-                imageUrl = `https://media.foxweather.com/weather/${day}%20East%20Severe%20Outlook.png`;
+                imageUrl = `https://media.foxweather.com/weather/${day}%20Northeast%20Severe%20Outlook.png`;
                 filename = `${dayStr}_Northeast_Severe_Storm_Threat_Outlook.png`;
                 break;
             case 'southeast':
@@ -129,7 +129,7 @@ const server = http.createServer((req, res) => {
                 imageUrl = `https://media.foxweather.com/weather/${day}%20Wind%20Outlook.png`;
                 break;
             case 'northeast':
-                imageUrl = `https://media.foxweather.com/weather/${day}%20East%20Severe%20Outlook.png`;
+                imageUrl = `https://media.foxweather.com/weather/${day}%20Northeast%20Severe%20Outlook.png`;
                 break;
             case 'southeast':
                 imageUrl = `https://media.foxweather.com/weather/${day}%20East%20Severe%20Outlook.png`;
