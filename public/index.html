@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Weather Outlook Downloader</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-pattern"></div>
+    <div class="bg-gradient"></div>
+    
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="date-badge">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span id="currentDate">Loading...</span>
+            </div>
+            
+            <h1 class="title">
+                Weather Outlook
+                <span class="title-sub">Downloader</span>
+            </h1>
+            
+            <p class="subtitle">
+                Download today's severe weather threat outlooks from Fox Weather with a single click
+            </p>
+        </header>
+
+        <!-- Cards Grid -->
+        <div class="cards-grid">
+            <!-- General US Severe Storm Card -->
+            <div class="card storm-card">
+                <div class="card-header">
+                    <div class="card-icon storm-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 19L18 7M11 4L7 8L11 12L7 16"></path>
+                        </svg>
+                    </div>
+                    <h2 class="card-title">General US Severe Storm</h2>
+                    <p class="card-description">Today's general US severe storm threat outlook</p>
+                </div>
+
+                <div class="image-preview" id="stormPreview">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <span>Loading storm outlook...</span>
+                    </div>
+                </div>
+
+                <button class="download-btn storm-btn" id="stormBtn" onclick="downloadImage('storm')">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
+                    </svg>
+                    <span>Download General US Outlook</span>
+                </button>
+
+                <div class="status-message" id="stormStatus"></div>
+            </div>
+
+            <!-- Northeast Severe Storm Card -->
+            <div class="card northeast-card">
+                <div class="card-header">
+                    <div class="card-icon northeast-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="card-title">Northeast Severe Storm</h2>
+                    <p class="card-description">Today's northeast severe storm threat outlook</p>
+                </div>
+
+                <div class="image-preview" id="northeastPreview">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <span>Loading northeast outlook...</span>
+                    </div>
+                </div>
+
+                <button class="download-btn northeast-btn" id="northeastBtn" onclick="downloadImage('northeast')">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
+                    </svg>
+                    <span>Download Northeast Outlook</span>
+                </button>
+
+                <div class="status-message" id="northeastStatus"></div>
+            </div>
+
+            <!-- Southeast Severe Storm Card -->
+            <div class="card southeast-card">
+                <div class="card-header">
+                    <div class="card-icon southeast-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="card-title">Southeast Severe Storm</h2>
+                    <p class="card-description">Today's southeast severe storm threat outlook</p>
+                </div>
+
+                <div class="image-preview" id="southeastPreview">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <span>Loading southeast outlook...</span>
+                    </div>
+                </div>
+
+                <button class="download-btn southeast-btn" id="southeastBtn" onclick="downloadImage('southeast')">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
+                    </svg>
+                    <span>Download Southeast Outlook</span>
+                </button>
+
+                <div class="status-message" id="southeastStatus"></div>
+            </div>
+
+            <!-- Southern Plains Severe Storm Card -->
+            <div class="card plains-card">
+                <div class="card-header">
+                    <div class="card-icon plains-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12h18m-9-9v18"></path>
+                        </svg>
+                    </div>
+                    <h2 class="card-title">Southern Plains Severe Storm</h2>
+                    <p class="card-description">Today's southern plains severe storm threat outlook</p>
+                </div>
+
+                <div class="image-preview" id="plainsPreview">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <span>Loading plains outlook...</span>
+                    </div>
+                </div>
+
+                <button class="download-btn plains-btn" id="plainsBtn" onclick="downloadImage('plains')">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
+                    </svg>
+                    <span>Download Plains Outlook</span>
+                </button>
+
+                <div class="status-message" id="plainsStatus"></div>
+            </div>
+
+            <!-- Damaging Wind Card -->
+            <div class="card wind-card">
+                <div class="card-header">
+                    <div class="card-icon wind-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17.7 7.7a2.5 2.5 0 111.8 4.3H2"></path>
+                            <path d="M9.6 4.6A2 2 0 1111 8H2"></path>
+                            <path d="M12.6 19.4A2 2 0 1014 16H2"></path>
+                        </svg>
+                    </div>
+                    <h2 class="card-title">Damaging Wind Threat</h2>
+                    <p class="card-description">Today's damaging wind threat outlook from Fox Weather</p>
+                </div>
+
+                <div class="image-preview" id="windPreview">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <span>Loading wind outlook...</span>
+                    </div>
+                </div>
+
+                <button class="download-btn wind-btn" id="windBtn" onclick="downloadImage('wind')">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
+                    </svg>
+                    <span>Download Wind Outlook</span>
+                </button>
+
+                <div class="status-message" id="windStatus"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Images sourced from Fox Weather • Updated daily</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

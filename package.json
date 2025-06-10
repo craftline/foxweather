@@ -1,13 +1,13 @@
 {
   "name": "weather-outlook-downloader",
   "version": "1.0.0",
-  "description": "Simple HTML and Node.js app to download Fox Weather severe outlook images",
+  "description": "Beautiful weather outlook downloader with Node.js backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js"
   },
-  "keywords": ["weather", "download", "html", "nodejs"],
+  "keywords": ["weather", "download", "nodejs", "foxweather"],
   "author": "",
   "license": "MIT",
   "engines": {
